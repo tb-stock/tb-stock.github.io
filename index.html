@@ -422,10 +422,11 @@ window.toggleLangMenu=()=>{
 // 발주 양식 다운로드 주소
 // 구글 시트를 엑셀로 내보내는 주소 — 시트를 수정하면 다음 다운로드부터 바로 반영된다.
 // (임시 파일이 생기지 않고, 시트가 "링크가 있는 모든 사용자" 보기 권한이면 로그인 없이 받을 수 있다)
-const ORDER_FORM_ID  = "";   // 템버린즈 발주 양식 시트 ID (정해지면 입력 → 버튼이 나타남)
-const ORDER_FORM_GID = "917488674";
+const ORDER_FORM_ID  = "13kDHxk3TdQ82cbCdH_eDLSzbA1bDmrZYvS0quGvOFzw";   // 템버린즈 오픈 / 리뉴얼 발주용 양식
+// 탭이 하나뿐이라 비워둔다. 비우면 시트 전체를, 지정하면 그 탭만 내려받는다.
+const ORDER_FORM_GID = "";
 const ORDER_FORM_URL = "https://docs.google.com/spreadsheets/d/" + ORDER_FORM_ID
-  + "/export?format=xlsx&gid=" + ORDER_FORM_GID;
+  + "/export?format=xlsx" + (ORDER_FORM_GID ? "&gid=" + ORDER_FORM_GID : "");
 
 let items=[],orders=[],cart=[];
 
