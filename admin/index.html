@@ -266,6 +266,90 @@ body.light #loading,body.dark #loading,body.light #login-screen,body.dark #login
 .login-langs button.on{border-color:var(--ink);color:var(--ink);background:var(--surface)}
 .status-dropdown{background:var(--surface)!important;border:1px solid var(--ink)!important}
 .logout-btn{white-space:nowrap}
+/* ══ 시연판 화면 구성: 관리자 헤더 · 위쪽 탭 · 요약 숫자 ══ */
+body.light #app-header,body.dark #app-header{padding:16px 16px 12px;align-items:flex-end}
+.brand-title{font-weight:900;font-size:17px;letter-spacing:.14em;line-height:1;color:var(--hfg)}
+.brand-sub{font-size:10px;letter-spacing:.2em;margin-top:6px;color:var(--hfg);opacity:.7;white-space:nowrap}
+.brand-sub #header-sub{letter-spacing:.02em;margin-left:6px;opacity:.85}
+.scallop{height:10px;flex-shrink:0;background:radial-gradient(circle at 8px 0,transparent 6.5px,#111111 7px) repeat-x;background-size:16px 10px}
+body.dark .scallop{background-image:radial-gradient(circle at 8px 0,transparent 6.5px,#0b0b0b 7px)}
+.adm-tabs{display:flex;flex-shrink:0;border-bottom:2px solid var(--ink);background:var(--bg);padding:8px 14px 0;gap:0;overflow-x:auto}
+.adm-tabs button{border:0;background:transparent;color:var(--ink);padding:9px 16px;font-weight:900;font-size:14px;letter-spacing:.04em;white-space:nowrap}
+.adm-tabs button.on{background:var(--ink);color:var(--bg)}
+#bottom-nav{display:none!important}
+.adm-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.kpi{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;background:var(--surface);border:1px solid var(--line);padding:12px;cursor:pointer;color:var(--ink)}
+.kpi .l{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--sub)}
+.kpi .v{font-size:26px;font-weight:900;line-height:1.1}
+.kpi.acc .v{color:var(--accent)}
+.kpi.low .v{color:var(--low)}
+
+
+/* ══ 시연판 화면 구성: 재고 관리 표 ══ */
+#stock-stats{display:none!important}
+.coll-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--dot);flex-shrink:0;vertical-align:middle}
+.fbtn{display:inline-flex;align-items:center;gap:6px}
+.fbtn .coll-dot{width:8px;height:8px}
+.fbtn.low-chip{color:var(--low)!important;border-color:var(--low)!important}
+.fbtn.low-chip.on{background:var(--low)!important;color:#fff!important}
+.s-table-wrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+.s-table{border-collapse:collapse;width:100%;font-size:12px;min-width:680px}
+.s-table th{text-align:left;font-size:11px;letter-spacing:.06em;color:var(--sub);font-weight:700;padding:9px 10px;border-bottom:1px solid var(--ink);white-space:nowrap}
+.s-table td{padding:7px 10px;border-bottom:1px solid var(--line2);vertical-align:middle;color:var(--ink)}
+.s-table tr.first td{border-top:1px solid var(--line)}
+.s-thumb{width:44px;height:44px;aspect-ratio:auto;cursor:pointer}
+.item-img.tinted{background:var(--tint)}
+body.dark .item-img.tinted{background:color-mix(in srgb,var(--dot) 16%,var(--surface))}
+.s-thumb .ph-name{font-size:7px;font-weight:900;color:var(--dot);text-align:center;padding:2px;line-height:1.1}
+.c-coll{white-space:nowrap;font-weight:700;font-size:11px;letter-spacing:.04em}
+.c-name b{font-weight:900}
+.c-name .item-name-btn{padding:1px 5px;font-size:10px;background:var(--bg);border:1px solid var(--line);cursor:pointer}
+.c-sub{font-size:10px;color:var(--muted)}
+.c-spec{color:var(--muted);font-size:11px}
+.c-qty{white-space:nowrap;font-weight:800;font-size:13px}
+.c-qty .unit{font-weight:400;font-size:10px;color:var(--muted)}
+.lowtxt{color:var(--low)}
+.low-pill{display:inline-block;font-size:9px;font-weight:900;letter-spacing:.08em;padding:1px 5px;border:1px solid var(--low);color:var(--low);margin-left:4px}
+.c-act button{padding:5px 9px;font-size:11px;font-weight:700;border:1px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
+@media(max-width:600px){
+  .s-table{min-width:0}
+  .s-table th:nth-child(2),.s-table td:nth-child(2),.s-table th:nth-child(5),.s-table td:nth-child(5){display:none}
+  .s-table td,.s-table th{padding:7px 6px}
+}
+@media(max-width:1099px){
+  #tab-stock .filter-row{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  #tab-stock .filter-label{display:none}
+}
+/* ══ 시연판 화면 구성: 주문 목록 표 ══ */
+.st-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.st-chips .fbtn .st-n{font-weight:400;opacity:.75;margin-left:2px}
+.o-head{display:none}
+.week-cycle .cycle-badge>span:first-child{font-size:11px}
+.o-row{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"store status" "items items" "date date";gap:6px 10px;align-items:start}
+.o-store{grid-area:store;min-width:0}
+.o-items{grid-area:items;min-width:0}
+.o-date{grid-area:date}
+.o-date>div{text-align:left!important}
+.o-status{grid-area:status}
+.o-store>div:first-child{margin-bottom:6px}
+.o-row.dim{opacity:.6}
+@media(min-width:900px){
+  .o-head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) 90px 130px;gap:14px;padding:9px 14px;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--sub);border-bottom:1px solid var(--ink);background:var(--surface)}
+  .o-row{grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) 90px 130px;grid-template-areas:"store items date status";gap:14px}
+  .o-date>div{text-align:left!important}
+}
+@media(max-width:700px){.adm-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+  .brand-title{font-size:14px;letter-spacing:.1em}
+  .brand-sub #header-sub{display:none}
+  #app-header .logout-btn{padding:5px 7px!important;font-size:10px!important}
+  #app-header>div:last-child{gap:5px!important}
+  .theme-toggle{width:42px;height:24px}
+  .theme-knob{width:18px;height:18px}
+  body.light .theme-knob{left:21px}
+  .adm-tabs button{padding:8px 11px;font-size:13px}
+}
+
 .dd-item:hover{background:var(--hover)}
 </style>
 </head>
@@ -289,12 +373,9 @@ body.light #loading,body.dark #loading,body.light #login-screen,body.dark #login
 
 <!-- 헤더 -->
 <div id="app-header">
-  <div style="display:flex;align-items:center;gap:10px">
-    <div class="logo-box">📦</div>
-    <div>
-      <div style="font-weight:800;font-size:14px">재고관리 <span style="font-size:10px;color:var(--ink);font-weight:600">관리자</span></div>
-      <div class="stat-lbl" id="header-sub">연결 중...</div>
-    </div>
+  <div class="brand">
+    <div class="brand-title">TB STOCK · ADMIN</div>
+    <div class="brand-sub">PROPS &amp; FIXTURES <span id="header-sub">연결 중...</span></div>
   </div>
   <div style="display:flex;align-items:center;gap:8px">
     <button class="logout-btn owner-only" type="button" onclick="window.openAccountModal()" title="매장·관리자 계정 관리">계정</button>
@@ -303,8 +384,13 @@ body.light #loading,body.dark #loading,body.light #login-screen,body.dark #login
   </div>
 </div>
 
+<div class="scallop"></div>
+<div class="adm-tabs">
+  <button type="button" id="top-orders" class="on" onclick="switchTab('orders')">주문 관리</button>
+  <button type="button" id="top-stock" onclick="switchTab('stock')">재고 관리</button>
+</div>
 <div id="app-body">
-  <div id="tab-stock" class="tab-pane active"><div class="page-scroll">
+  <div id="tab-stock" class="tab-pane"><div class="page-scroll">
     <div class="stat-row" id="stock-stats"></div>
     <div class="filter-label">연도</div><div class="filter-row" id="yr-filters"></div>
     <div class="filter-label">컬렉션</div><div class="filter-row" id="cl-filters"></div>
@@ -312,10 +398,11 @@ body.light #loading,body.dark #loading,body.light #login-screen,body.dark #login
     <div style="height:80px"></div>
   </div>
   <!-- 상품 추가 FAB -->
-  <button id="fab-add-item" onclick="window.openAddItemModal()" style="position:fixed;bottom:calc(60px + 16px);right:16px;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;font-size:26px;border:none;cursor:pointer;box-shadow:0 4px 20px var(--line);display:flex;align-items:center;justify-content:center;z-index:90" id="add-item-fab">＋</button>
+  <button id="fab-add-item" onclick="window.openAddItemModal()" style="position:fixed;bottom:24px;right:16px;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;font-size:26px;border:none;cursor:pointer;box-shadow:0 4px 20px var(--line);display:flex;align-items:center;justify-content:center;z-index:90" id="add-item-fab">＋</button>
   </div>
 
-  <div id="tab-orders" class="tab-pane"><div class="page-scroll">
+  <div id="tab-orders" class="tab-pane active"><div class="page-scroll">
+    <div class="adm-kpis" id="adm-kpis"></div>
     <div style="position:relative;margin-bottom:12px">
       <input id="order-search" type="search" placeholder="🔍 매장명 · 상품명 검색" autocomplete="off"
         style="width:100%;padding:11px 38px 11px 14px;border-radius:0;font-size:14px;font-family:inherit;outline:none;
@@ -330,8 +417,8 @@ body.light #loading,body.dark #loading,body.light #login-screen,body.dark #login
 </div>
 
 <div id="bottom-nav">
-  <button class="nav-btn active" id="nav-stock" onclick="switchTab('stock')"><span class="nav-icon">📦</span>재고</button>
-  <button class="nav-btn" id="nav-orders" onclick="switchTab('orders')"><span class="nav-icon">📋</span>출고요청</button>
+  <button class="nav-btn" id="nav-stock" onclick="switchTab('stock')"><span class="nav-icon">📦</span>재고</button>
+  <button class="nav-btn active" id="nav-orders" onclick="switchTab('orders')"><span class="nav-icon">📋</span>출고요청</button>
 </div>
 
 <script type="module">
@@ -407,6 +494,7 @@ window.switchTab=t=>{
   });
   document.getElementById("tab-"+t).classList.add("active");
   document.getElementById("nav-"+t).classList.add("active");
+  ["stock","batch","orders"].forEach(id=>document.getElementById("top-"+id)?.classList.toggle("on",id===t));
   if(t==="orders")renderOrders();
 
 };
@@ -512,6 +600,20 @@ window.toggleGroup=gk=>{collapsedGroups.has(gk)?collapsedGroups.delete(gk):colla
 window.toggleLowOnly=()=>{showLowOnly=!showLowOnly;renderStock();};
 
 // ── 렌더 재고 ──
+// 컬렉션 색 (매장 화면과 같은 색)
+const COLL_COLORS={
+  "MM2":["#fff8e1","#c99a1e"],"MM":["#fff8e1","#b08a2a"],"VEGGIE":["#e8f5e9","#4f8f5a"],"PRADA":["#fff3e0","#d9822b"],
+  "BOLD":["#e3f2fd","#3d7cc9"],"BOUQUET":["#fce4ec","#c95b85"],"JEWELRY":["#e8eaf6","#5a63b8"],
+  "POCKET X BRATZ":["#f3e5f5","#9c4fb0"],"FALL SEASON":["#fbe9e7","#c4633f"],"CIRCUIT X DISNEY":["#e0f7fa","#2a9aa8"]
+};
+// 템버린즈는 컬렉션별 색이 정해져 있지 않아서, 컬렉션 이름마다 아래 색 중 하나를 고정으로 배정한다 (매장 화면과 같은 방식)
+const COLL_PALETTE=Object.values(COLL_COLORS);
+function collVars(c){
+  const name=String(c||"").trim().toUpperCase();
+  let k=COLL_COLORS[name];
+  if(!k){ if(!name) k=["#efede8","#8a8780"]; else { let h=0; for(const ch of name) h=(h*31+ch.charCodeAt(0))>>>0; k=COLL_PALETTE[h%COLL_PALETTE.length]; } }
+  return `--tint:${k[0]};--dot:${k[1]}`;
+}
 
 // ── 재고 카드 버튼 이벤트 위임 ──
 // 상품명에 줄바꿈이나 따옴표가 들어가도 안전하도록 onclick 대신 위임을 쓴다.
@@ -542,6 +644,7 @@ document.addEventListener("click", e => {
 
 
 function renderStock(){
+  renderKpis();
   const total=items.reduce((a,i)=>a+totalQty(i),0);
   const low=items.filter(isLow);
   const years=[...new Set(items.map(i=>String(i.year||"")).filter(Boolean))].sort().reverse();
@@ -570,8 +673,8 @@ function renderStock(){
   }).join("");
   document.getElementById("cl-filters").innerHTML=["전체",...colls].map(c=>{
     const on=ac===c?"on":"";
-    return`<button class="fbtn ${on}" onclick="window.setFC('${c}')">${c}</button>`;
-  }).join("");
+    return`<button class="fbtn ${on}" onclick="window.setFC('${c}')" style="${c==="전체"?"":collVars(c)}">${c==="전체"?"":'<span class="coll-dot"></span>'}${c}</button>`;
+  }).join("")+`<button class="fbtn low-chip ${showLowOnly?"on":""}" onclick="window.toggleLowOnly()">재고 부족 ${low.length}</button>`;
 
   // 옵션 이름 안전하게 저장 (특수문자 대응)
   window.__opts={};
@@ -602,53 +705,34 @@ function renderStock(){
     const isCol=collapsedGroups.has(gk);
     const gTotal=gitems.reduce((a,i)=>a+totalQty(i),0);
     const sGk=gk.replace(/'/g,"\\'");
-    const cards=gitems.map(item=>{
-      const low=isLow(item),qty=totalQty(item),hasOpts=item.options?.length>0;
-      const nm=item.name.replace(/'/g,"\\'");
-      const optRows=hasOpts?item.options.map(o=>{
-        const oLow=(o.quantity||0)<10;
-        return`<div class="opt-row">
-          <span class="opt-name">${o.name}${o.size?`<span style="display:block;font-size:9px;color:var(--ink);opacity:.8">${o.size}</span>`:""}
-          </span>
-          ${oLow?`<span style="font-size:9px;flex-shrink:0">🔴</span>`:""}
-          <span class="opt-qty" style="color:${oLow?"var(--low)":(isDark?"var(--ink)":"var(--ink)")};flex-shrink:0">${o.quantity||0}<span class="unit"> ${item.unit||"개"}</span></span>
-        </div>`;
-      }).join(""):"";
-      return`<div class="item-card${low?" low-stock":""}">
-        <div class="item-img" onclick="window.openPhoto('${item.id}')" style="cursor:pointer">
-          ${item.imageUrl?`<img src="${item.imageUrl}" alt="${item.name}">`:`<span style="opacity:.15">📷</span>`}
-          ${low?`<div class="low-mask"></div>`:""}
-        </div>
-        <div class="item-body">
-          <div class="item-name" style="display:flex;align-items:center;gap:4px">
-            ${item.name}
-            <button class="item-name-btn" data-iid="${item.id}" style="padding:1px 5px;border-radius:0;font-size:9px;background:var(--bg);border:1px solid var(--line);color:var(--sub);cursor:pointer;flex-shrink:0">✏️</button>
-          </div>
-          ${item.material?`<div class="item-sub">${item.material}</div>`:""}
-          ${item.size?`<div class="item-sub" style="color:var(--ink);opacity:.85">${item.size}</div>`:""}
-          <div class="item-qty" style="color:${low?"var(--low)":(isDark?"var(--ink)":"var(--ink)")}">${qty}<span class="unit"> ${item.unit||"개"}</span></div>
-        </div>
-        ${hasOpts
-          ?`<div class="opts-panel">${item.options.map((o,oi)=>{
-              const oLow=(o.quantity||0)<10;
-              return`<div class="opt-row">
-                <span class="opt-name">${o.name}${o.size?`<br><span style="font-size:9px;color:var(--ink);opacity:.8">${o.size}</span>`:""}</span>
-                ${oLow?`<span style="font-size:9px;flex-shrink:0">🔴</span>`:""}
-                <span class="opt-qty" style="color:${oLow?"var(--low)":(isDark?"var(--ink)":"var(--ink)")};flex-shrink:0">${o.quantity||0}<span class="unit"> ${item.unit||"개"}</span></span>
-                <button class="opt-qty-btn" data-iid="${item.id}" data-oi="${oi}" data-qty="${o.quantity||0}"
-                  style="padding:2px 7px;border-radius:0;font-size:9px;font-weight:700;background:var(--bg);border:1px solid var(--line);color:var(--sub);flex-shrink:0;cursor:pointer">수정</button>
-              </div>`;}).join("")}</div>`
-          :`<div class="card-actions"><button class="item-qty-btn" data-iid="${item.id}" data-qty="${qty}" style="width:100%;padding:6px 0;border-radius:0;font-size:10px;font-weight:700;background:var(--bg);border:1px solid var(--line);color:var(--muted);cursor:pointer">수량 수정</button></div>`}
-      </div>`;
+    // 시연판 재고 표: 옵션마다 한 줄, 사진·컬렉션·상품명은 첫 줄에만
+    const rows=gitems.map(item=>{
+      const hasOpts=item.options?.length>0, qty=totalQty(item), low=isLow(item);
+      const unit=item.unit||"개";
+      const lines=hasOpts?item.options.map((o,oi)=>({name:o.name,size:o.size,q:o.quantity||0,oi})):[{name:"",q:qty,oi:-1}];
+      return lines.map((ln,li)=>{
+        const lowLn=ln.q<10;
+        const first=li===0;
+        return `<tr class="${first?"first":""}${low&&first?" low-item":""}">
+          <td class="c-thumb">${first?`<div class="item-img tinted s-thumb" style="${collVars(item.collection)}" onclick="window.openPhoto('${item.id}')">${item.imageUrl?`<img src="${item.imageUrl}" alt="">`:`<span class="ph-name">${escH(item.name)}</span>`}</div>`:""}</td>
+          <td class="c-coll">${first?`<span class="coll-dot" style="${collVars(item.collection)}"></span> ${escH(item.collection||"")}`:""}</td>
+          <td class="c-name">${first?`<b>${escH(item.name)}</b> <button class="item-name-btn" data-iid="${item.id}" title="상품명 수정">✏️</button>`:""}</td>
+          <td class="c-opt">${ln.name?escH(ln.name):"-"}${ln.size?`<div class="c-sub">${escH(ln.size)}</div>`:""}</td>
+          <td class="c-spec">${first?escH([item.size,item.material].filter(Boolean).join(" · ")):""}</td>
+          <td class="c-qty"><span class="${lowLn?"lowtxt":""}">${ln.q.toLocaleString()}</span> <span class="unit">${escH(unit)}</span>${lowLn?' <span class="low-pill">LOW</span>':""}</td>
+          <td class="c-act">${ln.oi>=0?`<button class="opt-qty-btn" data-iid="${item.id}" data-oi="${ln.oi}" data-qty="${ln.q}">수량 수정</button>`:`<button class="item-qty-btn" data-iid="${item.id}" data-qty="${ln.q}">수량 수정</button>`}</td>
+        </tr>`;
+      }).join("");
     }).join("");
+    const cards=`<div class="s-table-wrap"><table class="s-table"><thead><tr><th></th><th>컬렉션</th><th>상품명</th><th>옵션</th><th>사이즈 · 소재</th><th>수량</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
     return`<div class="collection-group">
-      <div class="coll-header${isCol?" collapsed":""}" onclick="window.toggleGroup('${sGk}')">
-        <span>${isCol?"📁":"🗂️"}</span>
-        <span style="color:${isDark?"var(--sub)":"var(--ink)"}">${gk}</span>
+      <div class="coll-header${isCol?" collapsed":""}" onclick="window.toggleGroup('${sGk}')" style="${collVars(gitems[0]&&gitems[0].collection)}">
+        <span class="coll-dot"></span>
+        <span style="color:var(--ink);font-weight:900">${gk}</span>
         <span style="margin-left:auto;font-size:10px;color:var(--ink)">${gitems.length}종 · ${gTotal.toLocaleString()}개</span>
         <span style="font-size:11px;color:${isDark?"var(--muted)":"var(--muted)"}">${isCol?"▶":"▼"}</span>
       </div>
-      ${!isCol?`<div class="items-wrap"><div class="item-grid">${cards}</div></div>`:""}
+      ${!isCol?`<div class="items-wrap">${cards}</div>`:""}
     </div>`;
   }}).join("");
 }
@@ -1369,17 +1453,55 @@ function matchesOrderSearch(o,q){
   return q.toLowerCase().split(/\s+/).filter(Boolean).every(w=>hay.includes(w));
 }
 
+// ── 요약 숫자 4칸 (시연판) ──
+let kpiLowCount=0;
+function renderKpis(){
+  const el=document.getElementById("adm-kpis"); if(!el) return;
+  const now=new Date(), ym=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0");
+  const pend=orders.filter(o=>(o.status||"검토중")==="검토중").length;
+  const prog=orders.filter(o=>["승인","준비중","출고대기"].includes(o.status)).length;
+  const done=orders.filter(o=>o.status==="출고완료"&&String(o.date||"").startsWith(ym)).length;
+  kpiLowCount=items.filter(isLow).length;
+  el.innerHTML=`<button type="button" class="kpi acc" onclick="window.kpiGo('검토중')"><span class="l">검토 대기</span><span class="v">${pend}</span></button>
+    <button type="button" class="kpi" onclick="window.kpiGo('진행')"><span class="l">진행 중 (승인~출고대기)</span><span class="v">${prog}</span></button>
+    <button type="button" class="kpi" onclick="window.kpiGo('출고완료')"><span class="l">이번 달 출고 완료</span><span class="v">${done}</span></button>
+    <button type="button" class="kpi low" onclick="window.kpiGo('low')"><span class="l">재고 부족 품목 (10개 미만)</span><span class="v">${kpiLowCount}</span></button>`;
+}
+window.kpiGo=k=>{
+  if(k==="low"){ if(!showLowOnly) window.toggleLowOnly(); switchTab("stock"); return; }
+  if(typeof window.setOrderStatusFilter==="function") window.setOrderStatusFilter(k);
+};
+// ── 주문 상태 칩 (시연판): 전체 / 상태별 개수, 누르면 그 상태만 ──
+let orderStatusFilter="전체";
+const STATUS_GROUPS={"진행":["승인","준비중","출고대기"]};
+window.setOrderStatusFilter=k=>{ orderStatusFilter=(orderStatusFilter===k&&k!=="전체")?"전체":k; switchTab("orders"); renderOrders(); };
+function statusMatch(o){
+  if(orderStatusFilter==="전체") return true;
+  const st=o.status||"검토중";
+  return (STATUS_GROUPS[orderStatusFilter]||[orderStatusFilter]).includes(st);
+}
 function renderOrders(){
+  renderKpis();
   const currentWeek=getWeekLabel(new Date().toISOString());
   const now=new Date();
   const currentMonthKey=now.getFullYear()+"-"+(now.getMonth()+1);
   const currentYearKey=""+now.getFullYear();
   const q=orderSearch.trim();
-  const searching=!!q;
-  const filteredOrders=orders.filter(o=>matchesOrderSearch(o,q));
-  const banner=searching
+  const searchedOrders=orders.filter(o=>matchesOrderSearch(o,q));
+  const filteredOrders=searchedOrders.filter(statusMatch);
+  // 검색 중이거나 상태를 고른 경우에는 모든 묶음을 펼쳐서 보여준다
+  const searching=!!q||orderStatusFilter!=="전체";
+  const chipList=["전체","검토중","승인","준비중","출고대기","출고완료","반려","취소"];
+  const chips="<div class=\"st-chips\">"+chipList.map(k=>{
+      const n=k==="전체"?searchedOrders.length:searchedOrders.filter(o=>(o.status||"검토중")===k).length;
+      const on=orderStatusFilter===k||(k==="전체"&&orderStatusFilter==="전체");
+      return "<button type=\"button\" class=\"fbtn"+(on?" on":"")+"\" onclick=\"window.setOrderStatusFilter('"+k+"')\">"+k+(k==="전체"?"":" <span class=\"st-n\">"+n+"</span>")+"</button>";
+    }).join("")
+    +(STATUS_GROUPS[orderStatusFilter]?"<button type=\"button\" class=\"fbtn on\" onclick=\"window.setOrderStatusFilter('전체')\">진행 중 ✕</button>":"")
+    +"</div>";
+  const banner=chips+(q
     ? "<div style=\"background:var(--bg);border:1px solid var(--line);border-radius:0;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--sub)\">🔍 \""+escH(q)+"\" 검색 결과 <strong>"+filteredOrders.length+"건</strong></div>"
-    : "";
+    : "");
 
   const weekGrouped={};
   filteredOrders.forEach(o=>{
@@ -1420,7 +1542,7 @@ function renderOrders(){
 
   const el=document.getElementById("orders-list");
   if(!Object.keys(weekGrouped).length){
-    el.innerHTML=banner+"<div style=\"text-align:center;padding:40px 20px;font-size:14px;color:var(--muted)\">"+(searching?"검색 결과가 없어요":"출고 요청 내역이 없어요")+"</div>";
+    el.innerHTML=banner+"<div style=\"text-align:center;padding:40px 20px;font-size:14px;color:var(--muted)\">"+(searching?"해당하는 출고 요청이 없어요":"출고 요청 내역이 없어요")+"</div>";
     return;
   }
 
@@ -1464,9 +1586,9 @@ function renderOrders(){
               html+="<div style=\"padding:7px 14px;font-size:11px;font-weight:600;color:var(--ok);background:var(--ok-bg);border-left:1px solid var(--ok);border-right:1px solid var(--ok)\">📦 이 주 주문은 "+shipDate+"에 발송 예정이에요</div>";
               html+="<div class=\"week-cycle\">";
               [{l:"월~금",d:"주문 접수",c:"var(--sub)"},{l:"월",d:"준비·택배접수",c:"var(--ink)"},{l:"화",d:"발송",c:"var(--ok)"}].forEach(s=>{
-                html+="<div class=\"cycle-badge\"><span style=\"font-weight:700;color:"+s.c+";padding:1px 6px;border-radius:0;background:"+s.c+"20\">"+s.l+"</span><span style=\"color:"+(isDark?"var(--muted)":"var(--muted)")+";font-size:10px\">"+s.d+"</span></div>";
+                html+="<div class=\"cycle-badge\"><span style=\"font-weight:700;color:"+s.c+";padding:1px 6px;border-radius:0;background:transparent\">"+s.l+"</span><span style=\"color:"+(isDark?"var(--muted)":"var(--muted)")+";font-size:10px\">"+s.d+"</span></div>";
               });
-              html+="</div><div class=\"order-list\">";
+              html+="</div><div class=\"order-list\"><div class=\"o-head\"><span>매장 · 요청 사유</span><span>요청 품목</span><span>요청일</span><span>상태</span></div>";
               wOrders.forEach(order=>{
                 html+=renderOrderCard(order);
               });
@@ -1531,13 +1653,9 @@ function renderOrderCard(order){
     +(canShip?"<button class=\"ship-order-btn\" data-oid=\""+order.id+"\" title=\"쉬핑 리스트 다운로드\" style=\"padding:2px 6px;border-radius:0;font-size:11px;background:var(--ok-bg);border:1px solid var(--ok);color:var(--ok);cursor:pointer;flex-shrink:0\">✈️</button>":"")
     +"</div>";
 
-  // 헤더 행 (1 depth)
-  let html="<div class=\"order-row\">"
-    +"<div style=\"display:flex;align-items:center;gap:6px;margin-bottom:8px\">"
-      +storeRow
-      +statusBtn
-      +dateMeta
-    +"</div>";
+  // 표 한 줄 (시연판): [매장·사유] [품목] [요청일] [상태]
+  let html="<div class=\"order-row o-row"+(["반려","취소"].includes(s)?" dim":"")+"\">"
+    +"<div class=\"o-store\">"+storeRow;
 
   // 사유
   if(order.reason) html+="<div style=\"font-size:11px;padding:6px 10px;border-radius:0;background:var(--bg);border:1px solid var(--bg);color:var(--sub);margin-bottom:6px\">📝 "+escH(order.reason)+"</div>";
@@ -1553,6 +1671,7 @@ function renderOrderCard(order){
   if(s==="취소"&&order.cancelReason) html+="<div style=\"font-size:11px;padding:6px 10px;border-radius:0;background:transparent;border:1px solid var(--low);color:var(--low);margin-bottom:6px\">🚫 취소 사유: "+escH(order.cancelReason)+"</div>";
   if(s==="반려"&&order.rejectReason) html+="<div style=\"font-size:11px;padding:6px 10px;border-radius:0;background:transparent;border:1px solid var(--low);color:var(--low);margin-bottom:6px\">❌ 반려 사유: "+escH(order.rejectReason)+"</div>";
 
+  html+="</div><div class=\"o-items\">";
   // 재고 품목
   const chips=order.items.map(it=>"<div class=\"item-chip\"><span style=\"font-size:9px;color:var(--ink);font-weight:600;margin-right:2px\">"+escH(it.collection)+"</span>"+escH(it.itemName)+(it.optName?" ["+escH(it.optName)+"]":"")+"<strong style=\"color:"+(isDark?"var(--ink)":"var(--ink)")+";margin-left:3px\">"+it.qty+escH(it.unit)+"</strong></div>");
   const SHOW=3;
@@ -1568,6 +1687,7 @@ function renderOrderCard(order){
       +"</div>";
   }
 
+  html+="</div><div class=\"o-date\">"+dateMeta+"</div><div class=\"o-status\">"+statusBtn+"</div>";
   html+="</div>"; // order-row 닫기
   return html;
 }

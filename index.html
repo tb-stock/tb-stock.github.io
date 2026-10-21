@@ -278,6 +278,96 @@ body.dark .item-card .item-img.tinted{background:color-mix(in srgb,var(--dot) 16
 .stock-meter{height:3px;background:var(--line2);margin-top:4px}
 .stock-meter i{display:block;height:100%;background:var(--ink)}
 .stock-meter.low i{background:var(--low)}
+
+/* ══ 시연판 화면 구성 1: 브랜드 헤더 · 물결 띠 · 검색/탭 · 출고 요청 띠 ══ */
+body.light #app-header,body.dark #app-header{padding:16px 16px 12px;align-items:flex-end}
+.brand-title{font-weight:900;font-size:19px;letter-spacing:.14em;line-height:1;color:var(--hfg)}
+.brand-sub{font-size:10px;letter-spacing:.2em;margin-top:6px;color:var(--hfg);opacity:.7;white-space:nowrap}
+.brand-sub #header-sub{letter-spacing:.02em;margin-left:6px;opacity:.85}
+.scallop{height:10px;flex-shrink:0;background:radial-gradient(circle at 8px 0,transparent 6.5px,#111111 7px) repeat-x;background-size:16px 10px}
+body.dark .scallop{background-image:radial-gradient(circle at 8px 0,transparent 6.5px,#0b0b0b 7px)}
+#store-toolbar{display:flex;gap:8px;padding:10px 14px;align-items:center;border-bottom:1px solid var(--line);background:var(--surface);flex-shrink:0}
+.tb-search{flex:1;min-width:0;display:flex;border:1px solid var(--ink)}
+.tb-search input{flex:1;min-width:0;border:0;padding:9px 10px;background:transparent;color:var(--ink);font-size:14px}
+.tb-tabs{display:flex;border:1px solid var(--ink);flex-shrink:0}
+.tb-tabs button{border:0;background:transparent;color:var(--ink);padding:8px 12px;font-weight:700;font-size:13px;white-space:nowrap}
+.tb-tabs button.on{background:var(--ink);color:var(--bg)}
+#bottom-nav{display:none!important}
+/* 필터: 요약 숫자 칸 대신 칩 한 줄 (휴대폰은 옆으로 넘김) */
+#stock-stats{display:none!important}
+.fbtn{display:inline-flex;align-items:center;gap:6px}
+.fbtn .coll-dot{width:8px;height:8px}
+.fbtn .fcount{display:none;margin-left:auto;font-weight:400;color:var(--muted)}
+.fbtn.on .fcount{color:inherit;opacity:.8}
+.fbtn.low-chip{color:var(--low)!important;border-color:var(--low)!important}
+.fbtn.low-chip.on{background:var(--low)!important;color:#fff!important}
+@media(max-width:1099px){
+  .filter-row{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-left:-14px;margin-right:-14px;padding-left:14px;padding-right:14px}
+  .filter-label{display:none}
+}
+
+/* ══ 시연판 화면 구성 2: 상품 카드 ══ */
+.item-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))!important;gap:10px}
+@media(max-width:600px){.item-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.item-body{padding:9px 10px 10px;gap:5px}
+.item-name{font-size:13px}
+.item-sub{white-space:normal;font-size:11px}
+.item-qtyrow{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:var(--sub);margin-top:2px}
+.item-qtyrow b{font-size:16px;color:var(--ink);font-weight:800}
+.item-qtyrow.low b{color:var(--low)}
+.card-add{display:flex;margin-top:auto;padding-top:6px}
+.card-opt{flex:1;min-width:0;border:1px solid var(--ink);border-right:0;background:var(--surface);color:var(--ink);padding:7px 4px;font-size:11px;border-radius:0}
+.card-add .btn-cart{width:auto;flex:1;margin-top:0;padding:7px 10px;font-size:12px;white-space:nowrap}
+.card-add .card-opt+.btn-cart{flex:0 0 auto}
+.btn-cart.in{background:var(--ink);color:var(--bg)}
+.btn-cart:disabled{opacity:.35}
+.item-card{height:100%}
+.item-body{display:flex;flex-direction:column}
+
+/* ══ 시연판 화면 구성 3: PC 3단 배치 · 출고 요청 칸 ══ */
+.stock-layout{display:block}
+@media(min-width:1100px){
+  .stock-layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:22px;align-items:start;padding-top:16px}
+  .stock-side{position:sticky;top:0;padding-right:16px;border-right:1px solid var(--line);min-height:60vh}
+  .stock-side .filter-label{display:block;letter-spacing:.14em;font-size:10px;margin:0 0 8px}
+  .stock-side .filter-row{flex-direction:column;flex-wrap:nowrap;gap:2px;margin-bottom:20px}
+  .stock-side .fbtn{width:100%;border:0!important;background:transparent!important;padding:7px 8px;font-size:12px;justify-content:flex-start}
+  .stock-side .fbtn .fcount{display:inline}
+  .stock-side .fbtn.on{background:var(--ink)!important;color:var(--bg)!important}
+  .stock-side .fbtn.low-chip{border:1px solid var(--low)!important;margin-top:8px}
+  .stock-side .fbtn.low-chip.on{background:var(--low)!important}
+}
+.cart-head{display:flex;justify-content:space-between;align-items:baseline;font-weight:900;font-size:13px;letter-spacing:.1em;padding-bottom:10px;margin-bottom:10px;border-bottom:2px solid var(--ink)}
+.cart-head span{font-size:11px;letter-spacing:.02em;color:var(--muted);font-weight:700}
+.cart-xl{border:1px dashed var(--ink);background:var(--bg);padding:10px;display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.cx-btn{flex:1;min-width:140px;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 8px;border:1px solid var(--ink);background:var(--surface);color:var(--ink);font-size:12px;font-weight:700;cursor:pointer;text-decoration:none}
+.cx-btn.ink{background:var(--ink);color:var(--bg)}
+.cart-lines{margin-bottom:10px}
+.cart-line{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line2)}
+.cart-thumb{width:48px;height:48px;aspect-ratio:auto}
+.cart-thumb .ph-name{font-size:7px;padding:2px}
+.cl-name{font-weight:800;font-size:13px;line-height:1.25}
+.cl-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.cl-remove{border:0;background:none;color:var(--low);font-size:11px;padding:0;margin-top:3px;text-decoration:underline}
+.cl-step{display:flex;border:1px solid var(--ink)}
+.cl-step button{width:30px;height:30px;border:0;background:transparent;color:var(--ink);font-size:16px;font-weight:900;padding:0}
+.cl-step span{min-width:34px;text-align:center;line-height:30px;font-weight:800;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.cart-submit{margin-top:4px}
+@media(min-width:1100px){.goto-stock{display:none}}
+.cart-clear{width:100%;padding:10px;margin-top:6px;border:0;background:none;color:var(--muted);font-size:12px;text-decoration:underline}
+@media(max-width:600px){
+  .brand-title{font-size:16px;letter-spacing:.12em}
+  .brand-sub{font-size:9px;letter-spacing:.16em}
+  .brand-sub #header-sub,#lang-label{display:none}
+  #app-header .logout-btn,#app-header [onclick="toggleLangMenu()"]{padding:5px 7px!important;font-size:10px!important}
+  #app-header>div:last-child{gap:5px!important}
+  .theme-toggle{width:42px;height:24px}
+  .theme-knob{width:18px;height:18px}
+  body.light .theme-knob{left:21px}
+}
+#order-bar{display:flex;justify-content:space-between;align-items:center;flex-shrink:0;width:100%;border:0;background:var(--accent);color:var(--accent-ink);padding:15px 16px calc(15px + env(safe-area-inset-bottom));font-weight:900;font-size:14px;letter-spacing:.06em}
+body[data-tab="cart"] #order-bar{display:none}
+@media(min-width:1100px){#order-bar{display:none}}
 /* ══ 리디자인 4단계: PC(넓은 화면)에서는 장바구니를 오른쪽에 항상 표시 ══ */
 @media(min-width:1100px){
   #app-body{flex-direction:row}
@@ -372,12 +462,9 @@ body.dark .item-card .item-img.tinted{background:color-mix(in srgb,var(--dot) 16
 
 <!-- 헤더 -->
 <div id="app-header">
-  <div style="display:flex;align-items:center;gap:10px">
-    <div class="logo-box">📦</div>
-    <div>
-      <div style="font-weight:800;font-size:14px" data-i18n="app_title">재고관리</div>
-      <div class="stat-lbl" id="header-sub">연결 중...</div>
-    </div>
+  <div class="brand">
+    <div class="brand-title">TAMBURINS</div>
+    <div class="brand-sub">PROPS &amp; FIXTURES STOCK <span id="header-sub">연결 중...</span></div>
   </div>
   <div style="display:flex;align-items:center;gap:8px">
     <div style="position:relative">
@@ -400,13 +487,25 @@ body.dark .item-card .item-img.tinted{background:color-mix(in srgb,var(--dot) 16
   </div>
 </div>
 
+<div class="scallop"></div>
+<div id="store-toolbar">
+  <div class="tb-search"><input id="stock-search" type="search" data-i18n-ph="lbl_itemname" placeholder="상품명" autocomplete="off"></div>
+  <div class="tb-tabs">
+    <button type="button" id="top-stock" class="on" onclick="switchTab('stock')" data-i18n="nav_stock">재고</button>
+    <button type="button" id="top-orders" onclick="switchTab('orders')" data-i18n="nav_orders">출고요청</button>
+  </div>
+</div>
 <div id="app-body">
-  <div id="tab-stock" class="tab-pane active"><div class="page-scroll">
-    <div class="stat-row" id="stock-stats"></div>
-    <div class="filter-label" data-i18n="lbl_year">연도</div><div class="filter-row" id="yr-filters"></div>
-    <div class="filter-label" data-i18n="lbl_collection">컬렉션</div><div class="filter-row" id="cl-filters"></div>
-    <div id="stock-groups"></div>
-    <div style="height:80px"></div>
+  <div id="tab-stock" class="tab-pane active"><div class="page-scroll stock-layout">
+    <aside class="stock-side">
+      <div class="stat-row" id="stock-stats"></div>
+      <div class="filter-label" data-i18n="lbl_collection">컬렉션</div><div class="filter-row" id="cl-filters"></div>
+      <div class="filter-label" data-i18n="lbl_year">연도</div><div class="filter-row" id="yr-filters"></div>
+    </aside>
+    <div class="stock-main">
+      <div id="stock-groups"></div>
+      <div style="height:80px"></div>
+    </div>
   </div></div>
 
   <div id="tab-cart" class="tab-pane"><div class="page-scroll" id="cart-page">
@@ -427,6 +526,7 @@ body.dark .item-card .item-img.tinted{background:color-mix(in srgb,var(--dot) 16
   </div></div>
 </div>
 
+<button type="button" id="order-bar" onclick="switchTab('cart')"><span data-i18n="btn_order">발주하기</span><span id="order-bar-n">0</span></button>
 <div id="bottom-nav">
   <button class="nav-btn active" id="nav-stock" onclick="switchTab('stock')"><span class="nav-icon">📦</span><span data-i18n="nav_stock">재고</span></button>
   <button class="nav-btn" id="nav-cart" onclick="switchTab('cart')"><span class="nav-icon">🛒</span><span data-i18n="nav_cart">장바구니</span><div class="nav-badge" id="cart-badge" style="display:none">0</div></button>
@@ -600,7 +700,7 @@ function statusBadgeHTML(status){
 let filterYear="전체",filterColl="전체";
 let collapsedGroups=new Set();
 let collapsedWeeks=new Set();
-let showLowOnly=false,isDark=false;
+let showLowOnly=false,isDark=false,stockSearch="";
 // 화면 밝기: 기본은 밝은 화면, 마지막으로 고른 값을 기억한다
 try{ isDark=localStorage.getItem("gm-theme")==="dark"; }catch(e){}
 document.body.className=isDark?"dark":"light";
@@ -650,6 +750,10 @@ window.switchTab=tab=>{
   });
   document.getElementById("tab-"+tab).classList.add("active");
   document.getElementById("nav-"+tab).classList.add("active");
+  // 위쪽 탭: 장바구니 화면일 때는 '재고'를 켜 둔다 (재고에서 이어지는 화면)
+  document.getElementById("top-stock")?.classList.toggle("on",tab!=="orders");
+  document.getElementById("top-orders")?.classList.toggle("on",tab==="orders");
+  document.body.dataset.tab=tab;
   if(tab==="cart")renderCart();
   if(tab==="orders")renderOrders();
 };
@@ -760,10 +864,10 @@ window.toggleGroup=gk=>{collapsedGroups.has(gk)?collapsedGroups.delete(gk):colla
 window.toggleLowOnly=()=>{showLowOnly=!showLowOnly;renderStock();};
 
 // ── 장바구니 모달 ──
-window.openCartModal=(itemId)=>{
+window.openCartModal=(itemId,optName)=>{
   cartTarget=items.find(i=>i.id===itemId);if(!cartTarget)return;
   const hasOpts=cartTarget.options?.length>0;
-  cartSelOpt=hasOpts?cartTarget.options[0].name:null;
+  cartSelOpt=hasOpts?((optName&&cartTarget.options.some(o=>o.name===optName))?optName:cartTarget.options[0].name):null;
   document.getElementById("cart-modal-title").textContent=cartTarget.name;
   document.getElementById("cart-qty").value=1;
   renderCartOptWrap();
@@ -831,6 +935,8 @@ function updateCartBadge(){
   const badge=document.getElementById("cart-badge");
   if(total>0){badge.style.display="flex";badge.textContent=total;}
   else badge.style.display="none";
+  const ob=document.getElementById("order-bar-n"); if(ob) ob.textContent=nu(total,"unit_pcs");
+  if(items.length) renderStock();   // 상품 카드의 '담김' 표시 갱신
   // 넓은 화면에서는 장바구니가 항상 보이므로 바로 다시 그린다
   if(window.matchMedia("(min-width:1100px)").matches) renderCart();
 }
@@ -1278,6 +1384,7 @@ const COLL_COLORS={
   "POCKET X BRATZ":["#f3e5f5","#9c4fb0"],"FALL SEASON":["#fbe9e7","#c4633f"],"CIRCUIT X DISNEY":["#e0f7fa","#2a9aa8"]
 };
 // 템버린즈는 컬렉션별 색이 따로 정해져 있지 않아서, 컬렉션 이름마다 아래 색 중 하나를 고정으로 배정한다
+function escAttr(v){return String(v??"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");}
 const COLL_PALETTE=Object.values(COLL_COLORS);
 function collVars(c){
   const name=String(c||"").trim().toUpperCase();
@@ -1316,10 +1423,13 @@ function renderStock(){
   }).join("");
   document.getElementById("cl-filters").innerHTML=["전체",...colls].map(c=>{
     const on=ac===c?"on":"";
-    return`<button class="fbtn ${on}" onclick="window.setFC('${c}')">${c==="전체"?t("filter_all"):c}</button>`;
-  }).join("");
+    const n=c==="전체"?byYear.length:byYear.filter(i=>i.collection===c).length;
+    return`<button class="fbtn ${on}" onclick="window.setFC('${c}')" style="${c==="전체"?"":collVars(c)}">${c==="전체"?"":'<span class="coll-dot"></span>'}${c==="전체"?t("filter_all"):c}<span class="fcount">${n}</span></button>`;
+  }).join("")+`<button class="fbtn low-chip ${showLowOnly?"on":""}" onclick="window.toggleLowOnly()">${t("stat_low")}<span class="fcount">${low.length}</span></button>`;
 
+  const sq=stockSearch.trim().toUpperCase();
   const filtered=items.filter(i=>
+    (!sq||[i.name,i.collection,i.material].some(v=>String(v||"").toUpperCase().includes(sq)))&&
     (showLowOnly?isLow(i):true)&&
     (filterYear==="전체"||String(i.year||"")==filterYear)&&
     (ac==="전체"||i.collection===ac)
@@ -1331,7 +1441,7 @@ function renderStock(){
   });
 
   if(!Object.keys(grouped).length){
-    document.getElementById("stock-groups").innerHTML=`<div style="text-align:center;padding:50px;font-size:14px;color:var(--muted)">${t("loading")}</div>`;return;
+    document.getElementById("stock-groups").innerHTML=`<div style="text-align:center;padding:50px;font-size:14px;color:var(--muted)">${items.length?t("search_none"):t("loading")}</div>`;return;
   }
 
   // 그룹별 최소 _order 기준 정렬 (프로그램 = 시트 동일 순서)
@@ -1346,31 +1456,25 @@ function renderStock(){
     const sGk=gk.replace(/'/g,"\\'");
     const cards=gitems.map(item=>{
       const low=isLow(item),qty=totalQty(item),hasOpts=item.options?.length>0;
-      const nm=item.name.replace(/'/g,"\\'");
-      const optRows=hasOpts?item.options.map(o=>{
-        const oLow=(o.quantity||0)<10;
-        return`<div class="opt-row">
-          <span class="opt-name">${tOpt(o.name)}${o.size?`<span style="display:block;font-size:9px;color:var(--muted)">${o.size}</span>`:""}
-          </span>
-          <span class="opt-qty" style="color:${oLow?"var(--low)":"var(--ink)"};flex-shrink:0">${o.quantity||0}<span class="unit"> ${item.unit==="개"?t("unit_pcs"):(item.unit||t("unit_pcs"))}</span></span>
-        </div>`;
-      }).join(""):"";
+      const unitTxt=item.unit==="개"?t("unit_pcs"):(item.unit||t("unit_pcs"));
       const meterPct=Math.min(100,Math.round(qty/((hasOpts?item.options.length:1)*100)*100));
+      const inCart=cart.filter(c=>c.itemId===item.id).reduce((a,c)=>a+c.qty,0);
+      const sel=hasOpts?`<select class="card-opt" id="opt-${item.id}" aria-label="${t("opt_select")}">${item.options.map(o=>`<option value="${escAttr(o.name)}" ${(o.quantity||0)<=0?"disabled":""}>${tOpt(o.name)} · ${o.quantity||0}</option>`).join("")}</select>`:"";
+      const btn=qty<=0&&!hasOpts?`<button class="btn-cart" disabled>${t("soldout")}</button>`
+        :`<button class="btn-cart${inCart?" in":""}" onclick="openCartModal('${item.id}',document.getElementById('opt-${item.id}')?.value)">${inCart?"✓ "+nu(inCart,"unit_pcs"):t("btn_add")}</button>`;
       return`<div class="item-card${low?" low-stock":""}" style="${collVars(item.collection)}">
         <div class="item-img tinted">
           ${qty<=0?`<span class="stock-tag out">SOLD OUT</span>`:low?`<span class="stock-tag low">LOW</span>`:""}
-          ${item.imageUrl?`<img src="${item.imageUrl}" alt="${item.name}">`:`<span class="ph-name">${item.name}</span>`}
+          ${item.imageUrl?`<img src="${item.imageUrl}" alt="${escAttr(item.name)}">`:`<span class="ph-name">${item.name}</span>`}
         </div>
         <div class="item-body">
           ${item.collection?`<div class="item-coll"><span class="coll-dot"></span>${item.collection}${item.year?` · ${item.year}`:""}</div>`:""}
           <div class="item-name">${item.name}</div>
-          ${item.material?`<div class="item-sub">${item.material}</div>`:""}
-          ${item.size?`<div class="item-sub">${item.size}</div>`:""}
-          <div class="item-qty" style="color:${low?"var(--low)":"var(--ink)"}">${qty}<span class="unit"> ${item.unit==="개"?t("unit_pcs"):(item.unit||t("unit_pcs"))}</span></div>
+          ${(item.size||item.material)?`<div class="item-sub">${[item.size,item.material].filter(Boolean).join(" · ")}</div>`:""}
+          <div class="item-qtyrow${low?" low":""}"><span>${t("nav_stock")}${hasOpts?` (${nu(item.options.length,"unit_type")})`:""}</span><b>${qty.toLocaleString()}<span class="unit"> ${unitTxt}</span></b></div>
           <div class="stock-meter${low?" low":""}"><i style="width:${meterPct}%"></i></div>
+          <div class="card-add">${sel}${btn}</div>
         </div>
-        ${hasOpts?`<div class="opts-panel">${optRows}<button class="btn-cart" onclick="openCartModal('${item.id}')">${t("btn_add")}</button></div>`
-        :`<div class="card-actions"><button class="btn-cart" onclick="openCartModal('${item.id}')">${t("btn_add")}</button></div>`}
       </div>`;
     }).join("");
     return`<div class="collection-group">
@@ -1385,61 +1489,54 @@ function renderStock(){
   }}).join("");
 }
 
+// ── 재고 검색 (상품명·컬렉션·소재) ──
+document.body.dataset.tab="stock";
+{
+  const si=document.getElementById("stock-search"); let st=null;
+  si&&si.addEventListener("input",()=>{ clearTimeout(st); st=setTimeout(()=>{ stockSearch=si.value; if(!document.getElementById("tab-stock").classList.contains("active")) switchTab("stock"); renderStock(); },150); });
+}
+
 // ── 렌더 장바구니 ──
+// 엑셀 발주 상자 (시연판 모양: 점선 상자 안에 엑셀 올리기 + 발주 양식 받기)
+function cartExcelBox(){
+  return `<div class="cart-xl">
+    <label class="cx-btn ink">📂 ${t("cart_excel_open")}<input type="file" accept=".xlsx,.xls" style="display:none" onchange="window.handleOpenOrderExcel(this)"></label>
+    <a class="cx-btn" href="${ORDER_FORM_URL}" download onclick="showToast(t('form_downloading'),'var(--ink)')">📄 ${t("cart_form_dl")}</a>
+  </div>`;
+}
 function renderCart(){
   const page=document.getElementById("cart-page");
   if(!cart.length){
-    page.innerHTML=`<div style="text-align:center;padding:60px 20px">
-      <div style="font-size:40px;margin-bottom:12px">🛒</div>
-      <div style="font-size:15px;font-weight:600;margin-bottom:6px">${t("cart_empty")}</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:20px">${t("cart_empty_desc")}</div>
-      <button onclick="window.switchTab('stock')" class="btn-primary" style="width:auto;padding:10px 24px;border-radius:0">${t("cart_goto_stock")}</button>
-      <div style="margin-top:14px">
-        <label style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:0;background:var(--ok-bg);border:1.5px solid var(--ok);color:var(--ok);font-size:14px;font-weight:700;cursor:pointer">
-          📂 ${t("cart_excel_open")}
-          <input type="file" accept=".xlsx,.xls" style="display:none" onchange="window.handleOpenOrderExcel(this)">
-        </label>
-        <div style="margin-top:10px">
-          <a href="${ORDER_FORM_URL}" download onclick="showToast(t('form_downloading'),'var(--ink)')"
-            style="${ORDER_FORM_ID?'':'display:none!important;'}display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:0;
-                   background:var(--bg);border:1.5px solid var(--line);color:var(--sub);
-                   font-size:14px;font-weight:700;cursor:pointer;text-decoration:none">
-            📄 ${t("cart_form_dl")}
-          </a>
-        </div>
-      </div>
-    </div>`;
+    page.innerHTML=`<div class="cart-head">${t("cart_items")}<span>${nu(0,"unit_pcs")}</span></div>
+      ${cartExcelBox()}
+      <div style="text-align:center;padding:30px 10px">
+        <div style="font-size:14px;font-weight:700;margin-bottom:6px">${t("cart_empty")}</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:16px">${t("cart_empty_desc")}</div>
+        <button onclick="window.switchTab('stock')" class="btn-primary goto-stock" style="width:auto;padding:10px 24px">${t("cart_goto_stock")}</button>
+      </div>`;
     return;
   }
   const total=cart.reduce((a,c)=>a+c.qty,0);
-  page.innerHTML=`<div style="font-weight:700;font-size:14px;margin-bottom:12px">${t("cart_items")} ${nu(cart.length,"unit_type")} · ${nu(total,"unit_pcs")}</div>`
-    +cart.map((c,i)=>`
-    <div class="cart-item">
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:700;font-size:14px">${c.itemName}${c.optName?` [${tOpt(c.optName)}]`:""}</div>
-        <div style="font-size:11px;color:var(--ink);margin-top:2px">${c.collection}</div>
+  const thumb=c=>{const it=items.find(i=>i.id===c.itemId)||{};return `<div class="cart-thumb item-img tinted" style="${collVars(c.collection)}">${it.imageUrl?`<img src="${it.imageUrl}" alt="">`:`<span class="ph-name">${c.itemName}</span>`}</div>`;};
+  const stockOf=c=>{const it=items.find(i=>i.id===c.itemId);if(!it)return null;if(c.optName&&it.options){const o=it.options.find(x=>x.name===c.optName);return o?(o.quantity||0):null;}return totalQty(it);};
+  page.innerHTML=`<div class="cart-head">${t("cart_items")}<span>${nu(cart.length,"unit_type")} · ${nu(total,"unit_pcs")}</span></div>`
+    +cartExcelBox()
+    +`<div class="cart-lines">`+cart.map((c,i)=>{const st=stockOf(c);return `
+    <div class="cart-line">
+      ${thumb(c)}
+      <div class="cl-text">
+        <div class="cl-name">${c.itemName}</div>
+        <div class="cl-sub">${c.collection}${c.optName?` · ${tOpt(c.optName)}`:""}${st!=null?` · ${t("nav_stock")} ${st.toLocaleString()}`:""}</div>
+        <button type="button" class="cl-remove" onclick="removeFromCart(${i})">${t("btn_remove")}</button>
       </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        <button class="cart-qty-btn" data-idx="${i}" data-delta="-1" title="-1"
-          style="width:30px;height:30px;border-radius:0;background:var(--bg);border:1px solid var(--line);color:inherit;font-size:17px;font-weight:600;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">−</button>
-        <div style="min-width:52px;text-align:center;font-weight:800;font-size:18px">${c.qty}<span class="unit">${c.unit==="개"?t("unit_pcs"):c.unit}</span></div>
-        <button class="cart-qty-btn" data-idx="${i}" data-delta="1" title="+1"
-          style="width:30px;height:30px;border-radius:0;background:var(--bg);border:1px solid var(--line);color:inherit;font-size:17px;font-weight:600;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">＋</button>
+      <div class="cl-step">
+        <button class="cart-qty-btn" data-idx="${i}" data-delta="-1" title="-1">−</button>
+        <span>${c.qty}</span>
+        <button class="cart-qty-btn" data-idx="${i}" data-delta="1" title="+1">＋</button>
       </div>
-      <button onclick="removeFromCart(${i})" style="padding:4px 10px;border-radius:0;background:transparent;border:1px solid var(--low);color:var(--low);font-size:12px;font-weight:600;flex-shrink:0">${t("btn_remove")}</button>
-    </div>`).join("")
-    +`<button onclick="window.openCheckout()" class="btn-primary" style="margin-top:8px">🚀 ${t("btn_order")} (${nu(total,"unit_pcs")})</button>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border-radius:0;background:var(--ok-bg);border:1.5px solid var(--ok);color:var(--ok);font-size:14px;font-weight:700;cursor:pointer;margin-top:8px">
-      📂 ${t("cart_excel_open")}
-      <input type="file" accept=".xlsx,.xls" style="display:none" onchange="window.handleOpenOrderExcel(this)">
-    </label>
-      <a href="${ORDER_FORM_URL}" download onclick="showToast(t('form_downloading'),'var(--ink)')"
-        style="${ORDER_FORM_ID?'':'display:none!important;'}display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border-radius:0;
-               background:var(--bg);border:1.5px solid var(--line);color:var(--sub);
-               font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;text-decoration:none;box-sizing:border-box">
-        📄 ${t("cart_form_dl")}
-      </a>
-    <button onclick="clearCart()" style="width:100%;padding:11px;border-radius:0;background:var(--bg);color:var(--muted);font-weight:600;font-size:14px;margin-top:8px;border:none;cursor:pointer">${t("cart_clear")}</button>
+    </div>`;}).join("")+`</div>`
+    +`<button onclick="window.openCheckout()" class="btn-primary cart-submit">${t("btn_order")} · ${nu(total,"unit_pcs")}</button>
+    <button onclick="clearCart()" class="cart-clear">${t("cart_clear")}</button>
     <div style="height:80px"></div>`;
 }
 window.removeFromCart=i=>{cart.splice(i,1);updateCartBadge();renderCart();};
