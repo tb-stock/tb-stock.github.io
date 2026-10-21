@@ -310,6 +310,12 @@ body.dark .item-img.tinted{background:color-mix(in srgb,var(--dot) 16%,var(--sur
 .c-qty .unit{font-weight:400;font-size:10px;color:var(--muted)}
 .lowtxt{color:var(--low)}
 .low-pill{display:inline-block;font-size:9px;font-weight:900;letter-spacing:.08em;padding:1px 5px;border:1px solid var(--low);color:var(--low);margin-left:4px}
+.restock-cell{display:flex;align-items:center;gap:4px;margin-top:3px;font-size:10px;font-weight:700}
+.restock-txt{color:var(--ink);border:1px solid var(--low);padding:1px 5px}
+.restock-empty{color:var(--muted);font-weight:400}
+.restock-btn{padding:1px 5px;font-size:10px;background:var(--bg);border:1px solid var(--line);cursor:pointer}
+.rs-opt{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:9px 0;border-top:1px solid var(--line2);font-size:13px;font-weight:700;color:var(--ink)}
+.rs-opt input[type=radio]{accent-color:var(--ink)}
 .c-act button{padding:5px 9px;font-size:11px;font-weight:700;border:1px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
 @media(max-width:600px){
   .s-table{min-width:0}
@@ -332,6 +338,8 @@ body.dark .item-img.tinted{background:color-mix(in srgb,var(--dot) 16%,var(--sur
 .o-date>div{text-align:left!important}
 .o-status{grid-area:status}
 .o-store>div:first-child{margin-bottom:6px}
+.o-orderer{font-size:11px;color:var(--muted);margin:-2px 0 6px}
+.o-orderer b{color:var(--ink)}
 .o-row.dim{opacity:.6}
 @media(min-width:900px){
   .o-head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) 90px 130px;gap:14px;padding:9px 14px;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--sub);border-bottom:1px solid var(--ink);background:var(--surface)}
@@ -519,7 +527,14 @@ function startData(){
     orders=snap.docs.map(d=>({...d.data(),id:d.id}));
     renderOrders();
   },err=>{console.error(err);showToast("출고요청을 불러오지 못했어요: "+err.message,"var(--low)");}));
+  // 발주자 전체 이름 (관리자만 읽을 수 있음)
+  dataUnsubs.push(onSnapshot(collection(db,"orderContacts"),snap=>{
+    ordererNames={}; snap.docs.forEach(d=>{ ordererNames[d.id]=(d.data()||{}).name||""; });
+    renderOrders();
+  },err=>{console.error("발주자 이름을 불러오지 못했어요",err);}));
 }
+let ordererNames={};
+function ordererOf(o){ return ordererNames[o.id]||o.ordererMasked||""; }
 
 // ── 관리자 로그인 ──
 // 관리자 명단: Firestore admins 컬렉션, 문서 ID = 관리자 이메일(소문자).
@@ -719,7 +734,7 @@ function renderStock(){
           <td class="c-name">${first?`<b>${escH(item.name)}</b> <button class="item-name-btn" data-iid="${item.id}" title="상품명 수정">✏️</button>`:""}</td>
           <td class="c-opt">${ln.name?escH(ln.name):"-"}${ln.size?`<div class="c-sub">${escH(ln.size)}</div>`:""}</td>
           <td class="c-spec">${first?escH([item.size,item.material].filter(Boolean).join(" · ")):""}</td>
-          <td class="c-qty"><span class="${lowLn?"lowtxt":""}">${ln.q.toLocaleString()}</span> <span class="unit">${escH(unit)}</span>${lowLn?' <span class="low-pill">LOW</span>':""}</td>
+          <td class="c-qty"><span class="${lowLn?"lowtxt":""}">${ln.q.toLocaleString()}</span> <span class="unit">${escH(unit)}</span>${lowLn?' <span class="low-pill">LOW</span>':""}${first?restockCell(item):""}</td>
           <td class="c-act">${ln.oi>=0?`<button class="opt-qty-btn" data-iid="${item.id}" data-oi="${ln.oi}" data-qty="${ln.q}">수량 수정</button>`:`<button class="item-qty-btn" data-iid="${item.id}" data-qty="${ln.q}">수량 수정</button>`}</td>
         </tr>`;
       }).join("");
@@ -736,6 +751,55 @@ function renderStock(){
     </div>`;
   }}).join("");
 }
+
+// ── 입고 안내 (재고 부족 상품에 매장 화면 LOW 옆으로 표시) ──
+// items 문서의 restock 칸: {type:"date", date:"YYYY-MM-DD"} / {type:"none"} / {type:"text", text:"..."} / 없음
+function restockText(r){
+  if(!r||!r.type) return "";
+  if(r.type==="date"&&r.date){ const m=String(r.date).match(/^(\d{4})-(\d{2})-(\d{2})$/); return (m?`${+m[2]}/${+m[3]}`:r.date)+" 입고 예정"; }
+  if(r.type==="none") return "입고 예정 없음";
+  if(r.type==="text") return String(r.text||"");
+  return "";
+}
+function restockCell(item){
+  const txt=restockText(item.restock);
+  return `<div class="restock-cell">${txt?`<span class="restock-txt">${escH(txt)}</span>`:`<span class="restock-empty">입고 안내 없음</span>`}<button type="button" class="restock-btn owner-only" data-iid="${item.id}" title="입고 안내 수정">✏️</button></div>`;
+}
+window.openRestockModal=itemId=>{
+  const item=items.find(i=>i.id===itemId); if(!item) return;
+  const r=item.restock||{};
+  const type=r.type||"off";
+  document.getElementById("restock-modal")?.remove();
+  const modal=document.createElement("div");modal.className="modal-bg";modal.id="restock-modal";
+  const opt=(v,label,extra="")=>`<label class="rs-opt"><input type="radio" name="rs-type" value="${v}" ${type===v?"checked":""}> ${label}${extra}</label>`;
+  modal.innerHTML=`<div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">입고 안내 · ${escH(item.name)}</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px">재고가 부족한 상품의 매장 화면 LOW 표시 옆에 보여요. 입고 예정일·입고 예정 없음은 매장 언어로 자동 번역되고, 직접 입력한 글은 그대로 보여요.</div>
+    ${opt("off","표시 안 함")}
+    ${opt("date","입고 예정일",` <input type="date" id="rs-date" class="field-input" style="width:auto;padding:6px 8px;font-size:13px;margin-left:6px" value="${escAttr(r.date||"")}">`)}
+    ${opt("none","입고 예정 없음")}
+    ${opt("text","직접 입력",` <input type="text" id="rs-text" class="field-input" maxlength="30" placeholder="예: 11월 중순 입고" style="padding:6px 8px;font-size:13px;margin-top:6px" value="${escAttr(r.text||"")}">`)}
+    <button class="btn-primary" style="margin-top:12px" onclick="window.saveRestock('${item.id}')">저장</button>
+    <button class="btn-secondary-sm" onclick="document.getElementById('restock-modal').remove()">취소</button>
+  </div>`;
+  modal.addEventListener("click",e=>{ if(e.target===modal) modal.remove(); });
+  modal.querySelectorAll("#rs-date,#rs-text").forEach(inp=>inp.addEventListener("focus",()=>{ const v=inp.id==="rs-date"?"date":"text"; modal.querySelector(`input[name=rs-type][value=${v}]`).checked=true; }));
+  document.body.appendChild(modal);
+};
+window.saveRestock=async itemId=>{
+  const type=document.querySelector("input[name=rs-type]:checked")?.value||"off";
+  let restock=null;
+  if(type==="date"){ const d=document.getElementById("rs-date").value; if(!d){ showToast("입고 예정일을 골라 주세요","var(--low)"); return; } restock={type:"date",date:d}; }
+  else if(type==="none") restock={type:"none"};
+  else if(type==="text"){ const tx=document.getElementById("rs-text").value.trim(); if(!tx){ showToast("안내 문구를 입력해 주세요","var(--low)"); return; } restock={type:"text",text:tx}; }
+  try{
+    await setDoc(doc(collection(db,"items"),itemId),{restock},{merge:true});
+    document.getElementById("restock-modal")?.remove();
+    showToast("입고 안내를 저장했어요");
+  }catch(e){ showToast("저장하지 못했어요: "+(e.code||e.message),"var(--low)"); }
+};
+document.addEventListener("click",e=>{ const b=e.target.closest(".restock-btn"); if(b) window.openRestockModal(b.dataset.iid); });
 
 // ── 상품명 수정 모달 ──
 window.openItemNameModal=(itemId,currentName)=>{
@@ -1364,7 +1428,7 @@ window.printOrder=(orderId)=>{
   const win=window.open("","_blank","width=820,height=680");
   win.document.write("<!DOCTYPE html><html lang='ko'><head><meta charset='UTF-8'><title>출고 지시서 - "+order.storeName+"</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;padding:40px;color:#111;font-size:13px}.header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;padding-bottom:14px;border-bottom:2px solid #111}.title{font-size:22px;font-weight:800}.meta{text-align:right;font-size:11px;color:#555;line-height:1.9}.info-row{display:flex;gap:36px;margin-bottom:22px}.info-item{display:flex;flex-direction:column;gap:3px}.info-label{font-size:10px;color:#666;font-weight:700;text-transform:uppercase}.info-value{font-size:14px;font-weight:700}table{width:100%;border-collapse:collapse;margin-bottom:24px}th{background:#111;color:#fff;padding:9px 12px;font-size:11px;font-weight:700;text-align:left}td{padding:9px 12px;border-bottom:1px solid #e5e7eb;font-size:12px}tr:nth-child(even) td{background:#f9fafb}.sign-area{display:flex;gap:32px;margin-top:30px}.sign-box{flex:1;border-top:1px solid #111;padding-top:8px;font-size:11px;color:#666;text-align:center;padding-bottom:40px}.footer{margin-top:20px;padding-top:12px;border-top:1px solid #e5e7eb;display:flex;justify-content:space-between;font-size:11px;color:#888}@media print{button{display:none!important}body{padding:20px}}</style></head><body>");
   win.document.write("<div class='header'><div><div class='title'>출고 지시서</div><div style='font-size:11px;color:#666;margin-top:3px'>DELIVERY ORDER</div></div><div class='meta'><div>발행일: "+dateStr+"</div><div>상태: "+order.status+"</div>"+(order.handler?"<div style='font-weight:700;margin-top:2px'>"+order.handler+"</div>":"")+"</div></div>");
-  win.document.write("<div class='info-row'><div class='info-item'><div class='info-label'>매장명</div><div class='info-value'>"+order.storeName+"</div></div><div class='info-item'><div class='info-label'>요청일</div><div class='info-value'>"+(order.date||"-")+"</div></div>"+(order.reason?"<div class='info-item'><div class='info-label'>요청 사유</div><div class='info-value' style='font-size:12px;font-weight:600'>"+order.reason+"</div></div>":"")+"</div>");
+  win.document.write("<div class='info-row'><div class='info-item'><div class='info-label'>매장명</div><div class='info-value'>"+order.storeName+"</div></div>"+(ordererOf(order)?"<div class='info-item'><div class='info-label'>발주자</div><div class='info-value'>"+escH(ordererOf(order))+"</div></div>":"")+"<div class='info-item'><div class='info-label'>요청일</div><div class='info-value'>"+(order.date||"-")+"</div></div>"+(order.reason?"<div class='info-item'><div class='info-label'>요청 사유</div><div class='info-value' style='font-size:12px;font-weight:600'>"+order.reason+"</div></div>":"")+"</div>");
   win.document.write("<table><thead><tr><th style='width:15%'>컬렉션</th><th style='width:22%'>재고명</th><th style='width:13%'>옵션</th><th style='width:20%'>사이즈</th><th style='width:15%'>소재</th><th style='width:9%;text-align:center'>수량</th></tr></thead><tbody>");
   rows.forEach(r=>{
     win.document.write("<tr><td>"+r.collection+"</td><td style='font-weight:600'>"+r.name+"</td><td style='color:#555'>"+(r.opt==="-"||r.opt==="null"?"-":r.opt)+"</td><td style='font-size:11px;color:#555'>"+r.size+"</td><td style='font-size:11px;color:#555'>"+r.material+"</td><td style='text-align:center;font-weight:800;font-size:13px'>"+r.qty+r.unit+"</td></tr>");
@@ -1448,6 +1512,7 @@ function matchesOrderSearch(o,q){
     o.storeName||"",
     o.reason||"",
     o.handler||"",
+    ordererOf(o),
     ...(o.items||[]).map(it=>`${it.itemName||""} ${it.optName||""} ${it.collection||""}`)
   ].join(" ").toLowerCase();
   return q.toLowerCase().split(/\s+/).filter(Boolean).every(w=>hay.includes(w));
@@ -1655,7 +1720,8 @@ function renderOrderCard(order){
 
   // 표 한 줄 (시연판): [매장·사유] [품목] [요청일] [상태]
   let html="<div class=\"order-row o-row"+(["반려","취소"].includes(s)?" dim":"")+"\">"
-    +"<div class=\"o-store\">"+storeRow;
+    +"<div class=\"o-store\">"+storeRow
+    +(ordererOf(order)?"<div class=\"o-orderer\">발주자 <b>"+escH(ordererOf(order))+"</b></div>":"");
 
   // 사유
   if(order.reason) html+="<div style=\"font-size:11px;padding:6px 10px;border-radius:0;background:var(--bg);border:1px solid var(--bg);color:var(--sub);margin-bottom:6px\">📝 "+escH(order.reason)+"</div>";
@@ -1902,7 +1968,7 @@ document.addEventListener("click",async e=>{
 // 담당자(manager)는 재고·프로그램 관리 기능을 쓸 수 없다. 버튼이 숨겨져 있어도 함수 단계에서 한 번 더 막는다.
 // (출고요청 승인·반려·상태 변경·취소·매장명 수정, 조회, 쉬핑 리스트·인쇄는 담당자도 가능)
 ["openAddItemModal","confirmAddItem","openItemNameModal","confirmItemName","openQtyModal","confirmQtyModal",
- "handleBatchOrderExcel","confirmBatchOrders","deleteOrder","openPhoto","openAccountModal"].forEach(name=>{
+ "handleBatchOrderExcel","confirmBatchOrders","deleteOrder","openPhoto","openAccountModal","openRestockModal","saveRestock"].forEach(name=>{
   const original=window[name];
   if(typeof original!=="function") return;
   window[name]=function(...args){
